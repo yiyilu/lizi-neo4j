@@ -1,6 +1,7 @@
 package com.hocassian.people.mapper.web;
 
 import com.hocassian.people.domain.web.PersonWeb;
+import org.apache.ibatis.annotations.Param;
 import org.neo4j.driver.Record;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +20,42 @@ public interface PersonWebMapper {
      */
     List<Record> selectPersonWebMap();
 
+    /**selectPersonWebMapFromTo
+     * 查询从from 到 to的 路径
+     * @param from
+     * @param to
+     * @return
+     */
+     List<Record> selectPersonWebMapFromTo(String from, String to);
+
+    /**
+     * 查询一度好友
+     * @param from
+     * @return
+     */
+     List<Record> selectPersonWebMapFrom(String from);
+
+    /**
+     * 查询一度粉丝
+     * @param to
+     * @return
+     */
+    List<Record> selectPersonWebMapTo(String to);
+
+    /**
+     * 查询用户关注的人
+     * @param from
+     * @return
+     */
+    List<PersonWeb> selectOutNeighbors(String from);
+
+    /**
+     * 查询关注用户的人
+     * @param to
+     * @return
+     */
+    List<PersonWeb> selectInNeighbors(String to);
+
     /**
      * 查询全部
      *
@@ -26,6 +63,29 @@ public interface PersonWebMapper {
      */
     List<PersonWeb> selectPersonWebList();
 
+    /**
+     * 分页查询List
+     * @param skip
+     * @param pageSize
+     * @return
+     */
+    List<PersonWeb> selectPersonWebListByPage(@Param("skip") int skip, @Param("pageSize") int pageSize);
+
+
+    /**
+     * 检验用户名和密码
+     * @param username
+     * @param password
+     * @return
+     */
+     List<PersonWeb> validatePerson(String username, String password);
+
+    /**
+     * 根据用户名寻找用户
+     * @param peopleWebName
+     * @return
+     */
+     List<PersonWeb> selectPersonWebListByName(String peopleWebName);
     /**
      * 查询全部（搜索使用）
      *

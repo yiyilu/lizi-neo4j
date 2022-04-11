@@ -7,11 +7,29 @@
         RETURN PersonAlpha,Connect,PersonBeta
     </select>
 
+    <select id="selectPersonWebMapFromTo" resultType="map">
+        MATCH (PersonAlpha:PersonWeb {personWebName:#{from} }),(PersonBeta:PersonWeb{personWebName:#{to}}),
+        Connect=shortestpath((PersonAlpha)-[*..10]-(PersonBeta))
+        RETURN Connect
+    </select>
+
+    <select id="selectPersonWebMapFrom" resultType="map">
+        MATCH (PersonAlpha:PersonWeb {personWebName:#{from} })-[Connect:ConnectWeb]->(PersonBeta:PersonWeb)
+              RETURN PersonAlpha,Connect,PersonBeta
+
+    </select>
+
+    <select id="selectPersonWebMapTo" resultType="map">
+        MATCH (PersonAlpha:PersonWeb )-[Connect:ConnectWeb]->(PersonBeta:PersonWeb{personWebName:#{to} })
+              RETURN PersonAlpha,Connect,PersonBeta
+    </select>
+
     <select id="selectPersonWebList" resultType="com.hocassian.people.domain.web.PersonWeb">
         MATCH (p:PersonWeb)
         RETURN
         p.personWebId as personWebId,
         p.personWebName as personWebName,
+        p.personWebPwd as personWebPwd,
         p.personWebPic as personWebPic,
         p.personWebShow as personWebShow,
         p.personWebLink as personWebLink,
@@ -19,6 +37,88 @@
         p.personWebField as personWebField,
         p.personWebInfo as personWebInfo,
         p.personWebKey as personWebKey
+    </select>
+
+    <select id="selectPersonWebListByPage"  resultType="com.hocassian.people.domain.web.PersonWeb">
+        MATCH (p:PersonWeb)
+              RETURN
+        p.personWebId as personWebId,
+        p.personWebName as personWebName,
+        p.personWebPwd as personWebPwd,
+        p.personWebPic as personWebPic,
+        p.personWebShow as personWebShow,
+        p.personWebLink as personWebLink,
+        p.personWebPlatform as personWebPlatform,
+        p.personWebField as personWebField,
+        p.personWebInfo as personWebInfo,
+        p.personWebKey as personWebKey
+        SKIP  #{skip} LIMIT #{pageSize}
+    </select>
+
+    <select id="validatePerson"  resultType="com.hocassian.people.domain.web.PersonWeb">
+        MATCH (p:PersonWeb{
+                  personWebName: #{username},personWebPwd: #{password}
+            })
+        RETURN
+              p.personWebId as personWebId,
+        p.personWebName as personWebName,
+        p.personWebPwd as personWebPwd,
+        p.personWebPic as personWebPic,
+        p.personWebShow as personWebShow,
+        p.personWebLink as personWebLink,
+        p.personWebPlatform as personWebPlatform,
+        p.personWebField as personWebField,
+        p.personWebInfo as personWebInfo,
+        p.personWebKey as personWebKey
+    </select>
+
+    <select id="selectPersonWebListByName"  resultType="com.hocassian.people.domain.web.PersonWeb">
+        MATCH (p:PersonWeb{
+                  personWebName: #{peopleWebName}
+                  })
+              RETURN
+        p.personWebId as personWebId,
+        p.personWebName as personWebName,
+        p.personWebPwd as personWebPwd,
+        p.personWebPic as personWebPic,
+        p.personWebShow as personWebShow,
+        p.personWebLink as personWebLink,
+        p.personWebPlatform as personWebPlatform,
+        p.personWebField as personWebField,
+        p.personWebInfo as personWebInfo,
+        p.personWebKey as personWebKey
+    </select>
+
+    <select id="selectOutNeighbors"  resultType="com.hocassian.people.domain.web.PersonWeb">
+        MATCH (p1:PersonWeb{personWebName: #{from}
+            })-[Connect:ConnectWeb]->(p2:PersonWeb)
+              RETURN
+        p2.personWebId as personWebId,
+        p2.personWebName as personWebName,
+        p2.personWebPwd as personWebPwd,
+        p2.personWebPic as personWebPic,
+        p2.personWebShow as personWebShow,
+        p2.personWebLink as personWebLink,
+        p2.personWebPlatform as personWebPlatform,
+        p2.personWebField as personWebField,
+        p2.personWebInfo as personWebInfo,
+        p2.personWebKey as personWebKey
+    </select>
+
+    <select id="selectInNeighbors"  resultType="com.hocassian.people.domain.web.PersonWeb">
+        MATCH (p1:PersonWeb)-[Connect:ConnectWeb]->(p2:PersonWeb{personWebName: #{to}
+              })
+              RETURN
+        p1.personWebId as personWebId,
+        p1.personWebName as personWebName,
+        p1.personWebPwd as personWebPwd,
+        p1.personWebPic as personWebPic,
+        p1.personWebShow as personWebShow,
+        p1.personWebLink as personWebLink,
+        p1.personWebPlatform as personWebPlatform,
+        p1.personWebField as personWebField,
+        p1.personWebInfo as personWebInfo,
+        p1.personWebKey as personWebKey
     </select>
 
     <select id="selectPersonWebSearchList" parameterType="String" resultType="com.hocassian.people.domain.web.PersonWeb">
@@ -46,6 +146,7 @@
         RETURN
         p.personWebId as personWebId,
         p.personWebName as personWebName,
+        p.personWebPwd as personWebPwd,
         p.personWebPic as personWebPic,
         p.personWebShow as personWebShow,
         p.personWebLink as personWebLink,
@@ -59,6 +160,7 @@
         merge (p:PersonWeb{
         personWebId: #{personWebId},
         personWebName: #{personWebName},
+        personWebPwd: #{personWebPwd},
         personWebPic: #{personWebPic},
         personWebShow: #{personWebShow},
         personWebLink: #{personWebLink},
@@ -75,6 +177,7 @@
         })
         SET
         p.personWebName = #{personWebName},
+        p.personWebPwd = #{personWebPwd},
         p.personWebPic = #{personWebPic},
         p.personWebShow = #{personWebShow},
         p.personWebLink = #{personWebLink},

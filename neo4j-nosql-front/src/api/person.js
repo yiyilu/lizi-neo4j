@@ -6,10 +6,72 @@ export function getPersonWebMap() {
     method: 'get'
   })
 }
+export function getPersonWebConnectId(from,to) {
+  return request({
+    url: '/people/web/searchConnectId/'+from+'/'+to,
+    method: 'get'
+  })
+}
+
+export function getPersonWebMapFromTo(from, to) {
+  return request({
+    url: '/people/web/map/'+from+'/'+to,
+    method: 'get'
+  })
+}
+
+export function getPersonWebMapFrom(from) {
+  return request({
+    url: '/people/web/map/from/'+from,
+    method: 'get'
+  })
+}
+
+export function getPersonWebMapTo(to) {
+  return request({
+    url: '/people/web/map/to/'+to,
+    method: 'get'
+  })
+}
+
+export function getOutNeighbors(from) {
+  return request({
+    url: '/people/web/outNeighbors/'+from,
+    method: 'get'
+  })
+}
+
+export function getInNeighbors(to) {
+  return request({
+    url: '/people/web/inNeighbors/'+to,
+    method: 'get'
+  })
+}
 
 export function getPersonWebList() {
   return request({
     url: '/people/web/list',
+    method: 'get'
+  })
+}
+
+export function getPersonWebListByPage(pageNum,pageSize) {
+  return request({
+    url: '/people/web/listByPage/'+pageNum + '/' + pageSize,
+    method: 'get'
+  })
+}
+
+export function getPersonWebNum() {
+  return request({
+    url: '/people/web/total',
+    method: 'get'
+  })
+}
+
+export function getPersonWebListByName(peopleWebName) {
+  return request({
+    url: '/people/web/listByName/'+peopleWebName,
     method: 'get'
   })
 }

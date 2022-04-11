@@ -12,6 +12,8 @@ public class PersonWeb {
 
     private String personWebName;
 
+    private String personWebPwd;
+
     private String personWebPic;
 
     private String personWebShow;
@@ -41,6 +43,15 @@ public class PersonWeb {
     public void setPersonWebName(String personWebName) {
         this.personWebName = personWebName;
     }
+
+    public String getPersonWebPwd() {
+        return personWebPwd;
+    }
+
+    public void setPersonWebPwd(String personWebPwd) {
+        this.personWebPwd = personWebPwd;
+    }
+
 
     public String getPersonWebPlatform() {
         return personWebPlatform;

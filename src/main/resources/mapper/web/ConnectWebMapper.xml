@@ -15,7 +15,19 @@
         n.personWebId as personWebIdBeta,
         n.personWebName as personWebIdBetaName
     </select>
-
+    <select id="selectConnectWebId"  resultType="com.hocassian.people.domain.web.ConnectWeb">
+        MATCH (m:PersonWeb{personWebName: #{from}
+                  })-[c:ConnectWeb]->(n:PersonWeb{personWebName: #{to}
+              })
+        RETURN
+        c.connectWebId as connectWebId,
+        c.connectWebName as connectWebName,
+        c.connectWebInfo as connectWebInfo,
+        m.personWebId as personWebIdAlpha,
+        m.personWebName as personWebIdAlphaName,
+              n.personWebId as personWebIdBeta,
+              n.personWebName as personWebIdBetaName
+    </select>
     <insert id="insertConnectWeb" parameterType="com.hocassian.people.domain.web.ConnectWeb">
         match(pa:PersonWeb{
         personWebId: #{personWebIdAlpha}

@@ -3,6 +3,8 @@ package com.hocassian.people.mapper.web;
 import com.hocassian.people.domain.web.ConnectWeb;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author Hocassian
  */
@@ -16,6 +18,9 @@ public interface ConnectWebMapper {
      * @return ConnectWeb实体信息
      */
     ConnectWeb selectConnectWebById(String connectWebId);
+
+    /*查询某对关系的Id*/
+    List<ConnectWeb> selectConnectWebId(String from, String to);
 
     /**
      * 插入单个连接信息

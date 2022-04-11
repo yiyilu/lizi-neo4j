@@ -8,15 +8,17 @@ import org.springframework.web.filter.CorsFilter;
 
 /**
  * @author Hocassian
+ * 用来解决跨域问题，指的是前端8080访问到后端8081的跨域
+ *
  */
 @Configuration
 public class CrosConfig {
 
     private CorsConfiguration buildConfig() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("*");
-        corsConfiguration.addAllowedHeader("*");
-        corsConfiguration.addAllowedMethod("*");
+        corsConfiguration.addAllowedOrigin("*");  //1
+        corsConfiguration.addAllowedHeader("*");  //2
+        corsConfiguration.addAllowedMethod("*");  //3
         corsConfiguration.setAllowCredentials(true);
         return corsConfiguration;
     }
@@ -24,7 +26,7 @@ public class CrosConfig {
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", buildConfig());
+        source.registerCorsConfiguration("/**", buildConfig()); //4
         return new CorsFilter(source);
     }
 
